@@ -80,5 +80,6 @@ class User:
     def para_string(self):
         return f"{self.pegar_id()}: {self.pegar_nome()} - {self.pegar_especie()} - {self.pegar_raca()} - {self.pegar_idade()} - {self.pegar_estado_de_saude()} - {self.pegar_data_de_chegada()} - {self.pegar_comportamento()}"
 
-    
+    def para_string_arquivo(self):
+        return f"{self.pegar_id()};{self.pegar_nome()};{self.pegar_especie()};{self.pegar_raca()};{self.pegar_idade()};{self.pegar_estado_de_saude()};{self.pegar_data_de_chegada()};{self.pegar_comportamento()}"
     

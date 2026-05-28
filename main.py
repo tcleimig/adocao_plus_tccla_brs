@@ -6,7 +6,13 @@ from entidade.usuário import User
 
 from menu import Menu
 
+from arquivo import salvar_animais_arquivo
+
+from arquivo import carregar_animais_arquivo
+
 lista_animais = []
+
+carregar_animais_arquivo(lista_animais)
 
 def observe_opcao(opcao):     
 
@@ -37,8 +43,13 @@ def observe_valor_menu():
     return int(observe_valor)
 
 def observar_base_de_dados(lista_valores):
-    
-    return len(lista_valores) + 1
+    maior_id = 0
+
+    for animal in lista_valores:
+        if animal.pegar_id() > maior_id:
+            maior_id = animal.pegar_id()
+
+    return maior_id + 1
 
 def adicionar_animal(lista_animais):
 
@@ -71,6 +82,8 @@ def adicionar_animal(lista_animais):
 def salvar_animal(animal):
 
     lista_animais.append(animal)
+
+    salvar_animais_arquivo(lista_animais)
 
 def visualizar_animais():
 
@@ -125,6 +138,8 @@ def deletar_animal(id):
         print(f"animal na lista?: {animal in lista_animais}")
 
         lista_animais.remove(animal)
+
+        salvar_animais_arquivo(lista_animais)
 
         print("-" * 40)
 
@@ -208,6 +223,8 @@ def atualizar_animal():
         Menu.menu_atualizar()
 
         opcao = int(input("Digite o número de uma opção: "))
+    
+    salvar_animais_arquivo(lista_animais)
     
     print(animal.para_string())
 
