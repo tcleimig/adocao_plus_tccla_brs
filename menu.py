@@ -2,7 +2,19 @@ class Menu:
     def __init__(self):
         pass
 
-    def menu_principal():
+    def menu_inicio():
+
+        print("-" * 40)
+        print("ADOÇÃO+ - MENU PRINCIPAL")
+        print("-" * 40)
+
+        return input(
+            "1 - Gerenciar animais\n"
+            "2 - Gerenciar cuidados e atividades\n"
+            "3 - Sair do sistema\n"
+    )
+
+    def menu_animais():
         
         print("Adoção+ - Escolha a opção de interesse")
         
@@ -21,3 +33,17 @@ class Menu:
         print("Nenhum animal cadastrado")
 
         print("-" * 40)
+
+    def menu_cuidados():
+
+        print("-" * 40)
+        print("MENU DE CUIDADOS")
+        print("-" * 40)
+
+        return input(
+            "1 - Adicionar cuidado\n"
+            "2 - Visualizar cuidados\n"
+            "3 - Editar cuidado\n"
+            "4 - Deletar cuidado\n"
+            "5 - Voltar\n"
+        )

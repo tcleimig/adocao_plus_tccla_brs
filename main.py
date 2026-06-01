@@ -7,12 +7,20 @@ from entidade.usuário import User
 from menu import Menu
 
 from arquivo import salvar_animais_arquivo
-
 from arquivo import carregar_animais_arquivo
+
+from cuidados import Cuidado
+
+from arquivo import salvar_cuidados_arquivo
+from arquivo import carregar_cuidados_arquivo
 
 lista_animais = []
 
 carregar_animais_arquivo(lista_animais)
+
+lista_cuidados = []
+
+carregar_cuidados_arquivo(lista_cuidados)
 
 def observe_opcao(opcao):     
 
@@ -26,9 +34,9 @@ def observe_opcao(opcao):
 
         return True
 
-def observe_valor_menu():
+def observe_valor_menu_animais():
 
-    observe_valor = Menu.menu_principal()
+    observe_valor = Menu.menu_animais()
     
     while observe_opcao(observe_valor):
         
@@ -38,7 +46,7 @@ def observe_valor_menu():
 
         print("-" * 40)
 
-        observe_valor = Menu.menu_principal()
+        observe_valor = Menu.menu_animais()
     
     return int(observe_valor)
 
@@ -48,6 +56,15 @@ def observar_base_de_dados(lista_valores):
     for animal in lista_valores:
         if animal.pegar_id() > maior_id:
             maior_id = animal.pegar_id()
+
+    return maior_id + 1
+
+def observar_base_de_cuidados(lista_cuidados):
+    maior_id = 0
+
+    for cuidado in lista_cuidados:
+        if cuidado.pegar_id() > maior_id:
+            maior_id = cuidado.pegar_id()
 
     return maior_id + 1
 
@@ -230,29 +247,234 @@ def atualizar_animal():
 
     print("-" * 40)
 
-def main():
+def adicionar_cuidado(lista_cuidados):
 
-    valor = observe_valor_menu()
+    visualizar_animais()
+
+    if len(lista_animais) == 0:
+        return
+
+    id_animal = int(input("Digite o ID do animal relacionado ao cuidado: "))
+
+    animal = procurar_animal(id_animal)
+
+    if animal is None:
+        print("Animal não encontrado.")
+        return None
+
+    tipo = input("Digite o tipo do cuidado/atividade: ")
+    data = input("Digite a data prevista do cuidado: ")
+    responsavel = input("Digite o responsável pelo cuidado: ")
+
+    id = observar_base_de_cuidados(lista_cuidados)
+
+    cuidado = Cuidado(id, id_animal, tipo, data, responsavel)
+
+    print("-" * 40)
+    print("Cuidado cadastrado com sucesso!")
+    print("-" * 40)
+
+    return cuidado
+
+def salvar_cuidado(cuidado):
+
+    if cuidado is not None:
+
+        lista_cuidados.append(cuidado)
+
+        salvar_cuidados_arquivo(lista_cuidados)
+
+def visualizar_cuidados():
+
+    if len(lista_cuidados) > 0:
+
+        print("-" * 40)
+        print("Cuidados cadastrados:")
+
+        for cuidado in lista_cuidados:
+
+            animal = procurar_animal(cuidado.pegar_id_animal())
+
+            if animal is not None:
+                nome_animal = animal.pegar_nome()
+            else:
+                nome_animal = "Animal não encontrado"
+
+            print(
+                f"{cuidado.pegar_id()}: "
+                f"{nome_animal} - "
+                f"{cuidado.pegar_tipo()} - "
+                f"{cuidado.pegar_data()} - "
+                f"{cuidado.pegar_responsavel()}"
+            )
+
+        print("-" * 40)
+
+    else:
+
+        print("Nenhum cuidado cadastrado.")
+
+def procurar_cuidado(id):
+
+    for cuidado in lista_cuidados:
+
+        if cuidado.pegar_id() == id:
+
+            return cuidado
+
+def atualizar_cuidado():
+
+    visualizar_cuidados()
+
+    if len(lista_cuidados) == 0:
+        return
+
+    id = int(input("Digite o ID do cuidado que deseja atualizar: "))
+
+    cuidado = procurar_cuidado(id)
+
+    if cuidado is None:
+
+        print("ID inválido.")
+        return
+
+    print("-" * 40)
+    print("1 - Editar tipo")
+    print("2 - Editar data")
+    print("3 - Editar responsável")
+    print("4 - Voltar")
+    print("-" * 40)
+
+    opcao = int(input("Digite uma opção: "))
+
+    while opcao != 4:
+
+        if opcao == 1:
+
+            tipo = input("Digite o novo tipo: ")
+
+            cuidado.definir_tipo(
+                tipo if len(tipo) != 0 else cuidado.pegar_tipo()
+            )
+
+        elif opcao == 2:
+
+            data = input("Digite a nova data: ")
+
+            cuidado.definir_data(
+                data if len(data) != 0 else cuidado.pegar_data()
+            )
+
+        elif opcao == 3:
+
+            responsavel = input("Digite o novo responsável: ")
+
+            cuidado.definir_responsavel(
+                responsavel if len(responsavel) != 0 else cuidado.pegar_responsavel()
+            )
+
+        else:
+
+            print("Valor inválido.")
+
+        print("-" * 40)
+        print(cuidado.para_string())
+        print("-" * 40)
+
+        print("-" * 40)
+        print("1 - Editar tipo")
+        print("2 - Editar data")
+        print("3 - Editar responsável")
+        print("4 - Voltar")
+        print("-" * 40)
+
+        opcao = int(input("Digite uma opção: "))
+
+    salvar_cuidados_arquivo(lista_cuidados)
+
+def deletar_cuidado():
+
+    visualizar_cuidados()
+
+    if len(lista_cuidados) == 0:
+        return
+
+    id = int(input("Digite o ID do cuidado que deseja deletar: "))
+
+    cuidado = procurar_cuidado(id)
+
+    if cuidado is None:
+
+        print("ID inválido. Digite um ID cadastrado.")
+        return
+
+    lista_cuidados.remove(cuidado)
+
+    salvar_cuidados_arquivo(lista_cuidados)
+
+    print("-" * 40)
+    print("Cuidado removido do sistema.")
+    print("-" * 40)
+
+def menu_animais_sistema():
+
+    valor = observe_valor_menu_animais()
 
     while valor != 5:
 
-        if (valor == 1):
-
+        if valor == 1:
             salvar_animal(adicionar_animal(lista_animais))
 
-        if (valor == 2):
-            
+        elif valor == 2:
             visualizar_animais()
 
-        if (valor == 3):
-            
+        elif valor == 3:
             atualizar_animal()
 
-        if (valor == 4):
-            
+        elif valor == 4:
             deletar_animal(id)
 
-        valor = observe_valor_menu()
+        valor = observe_valor_menu_animais()
+
+def menu_cuidados_sistema():
+
+    opcao = Menu.menu_cuidados()
+
+    while opcao != "5":
+
+        if opcao == "1":
+            salvar_cuidado(adicionar_cuidado(lista_cuidados))
+
+        elif opcao == "2":
+            visualizar_cuidados()
+
+        elif opcao == "3":
+            atualizar_cuidado()
+
+        elif opcao == "4":
+            deletar_cuidado()
+
+        else:
+            print("Valor inválido.")
+
+        opcao = Menu.menu_cuidados()
+
+def main():
+
+    opcao = Menu.menu_inicio()
+
+    while opcao != "3":
+
+        if opcao == "1":
+            menu_animais_sistema()
+
+        elif opcao == "2":
+            menu_cuidados_sistema()
+
+        else:
+            print("Valor inválido.")
+
+        opcao = Menu.menu_inicio()
 
 if __name__ == "__main__":
     

@@ -1,8 +1,46 @@
-import os
-
-os.system('cls')
-
 from entidade.usuário import User
+
+from cuidados import Cuidado
+
+def salvar_cuidados_arquivo(lista_cuidados):
+
+    arquivo = open("cuidados.csv", "w", encoding="utf-8")
+
+    for cuidado in lista_cuidados:
+
+        arquivo.write(cuidado.para_string_arquivo() + "\n")
+
+    arquivo.close()
+
+
+def carregar_cuidados_arquivo(lista_cuidados):
+
+    try:
+
+        arquivo = open("cuidados.csv", "r", encoding="utf-8")
+
+        for linha in arquivo:
+
+            dados = linha.strip().split(";")
+
+            if len(dados) == 5:
+
+                cuidado = Cuidado(
+                    int(dados[0]),
+                    int(dados[1]),
+                    dados[2],
+                    dados[3],
+                    dados[4]
+                )
+
+                lista_cuidados.append(cuidado)
+
+        arquivo.close()
+
+    except FileNotFoundError:
+
+        arquivo = open("cuidados.csv", "w", encoding="utf-8")
+        arquivo.close()
 
 def carregar_animais_arquivo(lista_animais):
 
