@@ -5,26 +5,30 @@ class Menu:
     def menu_inicio():
 
         print("-" * 40)
-        print("ADOÇÃO+ - MENU PRINCIPAL")
+        print("Adoção+ - MENU PRINCIPAL")
         print("-" * 40)
 
         return input(
             "1 - Gerenciar animais\n"
             "2 - Gerenciar cuidados e atividades\n"
-            "3 - Sair do sistema\n"
-    )
+            "3 - Sair do sistema\n")
+     
 
     def menu_animais():
+       
+        print("-" * 40)
+
+        print("Adoção+ - GERENCIAMENTO DE ANIMAIS")
+
+        print("-" * 40) 
         
-        print("Adoção+ - Escolha a opção de interesse")
-        
-        return input("1 - Adicionar animal\n2 - Visualizar animais no sistema\n3 - Editar informações do animal\n4 - Deletar animal do sistema\n5 - Sair do sistema\n")
+        return input("1 - Adicionar animal\n2 - Visualizar animais no sistema\n3 - Editar informações de um animal\n4 - Deletar um animal do sistema\n5 - Voltar ao menu principal\n")
     
     def menu_atualizar():
 
         print("-" * 40)
 
-        print("1 - Editar estado de saúde\n2 - Editar idade do animal\n3 - Editar comportamento do animal \n4 - Editar data de chegada do animal\n5 - Editar raça do animal\n6 - Editar espécie do animal\n7 - Editar nome do animal\n8 - Parar de atualizar\n")
+        print("1 - Editar estado de saúde\n2 - Editar idade do animal\n3 - Editar comportamento do animal \n4 - Editar data de chegada do animal\n5 - Editar raça do animal\n6 - Editar espécie do animal\n7 - Editar nome do animal\n8 - Parar de atualizar")
 
     def animal_nao_encontrado():
         
@@ -37,7 +41,7 @@ class Menu:
     def menu_cuidados():
 
         print("-" * 40)
-        print("MENU DE CUIDADOS")
+        print("Adoção+ - GERENCIAMENTO DE CUIDADOS")
         print("-" * 40)
 
         return input(

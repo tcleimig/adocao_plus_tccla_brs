@@ -2,6 +2,8 @@ import os
 
 os.system('cls')
 
+from datetime import datetime, timedelta
+
 from entidade.usuário import User
 
 from menu import Menu
@@ -44,8 +46,6 @@ def observe_valor_menu_animais():
 
         print("Valor inválido, tente novamente")
 
-        print("-" * 40)
-
         observe_valor = Menu.menu_animais()
     
     return int(observe_valor)
@@ -82,7 +82,7 @@ def adicionar_animal(lista_animais):
     
     estado_de_saude = input("Digite o estado de saúde do animal: ") 
     
-    data_de_chegada = input("Digite a data em que o animal chegou no centro: ")
+    data_de_chegada = input("Digite a data de chegada do animal: ")
     
     comportamento = input("Digite o comportamento do animal: ")
 
@@ -91,8 +91,6 @@ def adicionar_animal(lista_animais):
     print("-" * 40)
 
     print("Animal cadastrado com sucesso!")
-
-    print("-" * 40)
 
     return User(nome, especie, raca, idade, estado_de_saude, data_de_chegada, comportamento, id)
 
@@ -105,16 +103,16 @@ def salvar_animal(animal):
 def visualizar_animais():
 
     if len(lista_animais) > 0:
-        
+
         print("-" * 40)
 
         print("Animais Cadastrados:")
 
+        print("-" * 40)
+
         for animal in lista_animais:
             
             print(f"{animal.para_string()}")
-
-        print("-" * 40)
 
     else:
         
@@ -134,19 +132,19 @@ def deletar_animal(id):
 
     visualizar_animais()
 
+    print("-" * 40)
+    
     id = int(input("Digite o Id do animal que você irá deletar: "))
+
+    print("-" * 40)
 
     if len(lista_animais) > 0:
 
         animal = procurar_animal(id)
-
-        print("-" * 40)
         
         if animal not in lista_animais or animal is None:
             
             print("Id inválido. Digite um Id cadastrado")
-
-            print("-" * 40)
 
             return
 
@@ -162,8 +160,6 @@ def deletar_animal(id):
 
         print("Animal removido do sistema.")
 
-        print("-" * 40)
-
     else:
         
        Menu.animal_nao_encontrado()
@@ -174,6 +170,8 @@ def atualizar_animal():
 
     visualizar_animais()
 
+    print("-" * 40)
+
     id = int(input("Digite o Id do animal que deseja atualizar: "))
     
     animal = procurar_animal(id)
@@ -182,11 +180,11 @@ def atualizar_animal():
             
         print("Id inválido. Digite um Id cadastrado")
 
-        print("-" * 40)
-
         return
     
     Menu.menu_atualizar()
+    
+    print("-" * 40)
     
     opcao = int(input("Digite o número de uma opção: "))
 
@@ -236,43 +234,54 @@ def atualizar_animal():
         else:
             
             print("Valor inválido")
-
-        Menu.menu_atualizar()
-
+        
+        Menu.menu_atualizar()        
+        
         opcao = int(input("Digite o número de uma opção: "))
     
     salvar_animais_arquivo(lista_animais)
-    
-    print(animal.para_string())
-
-    print("-" * 40)
 
 def adicionar_cuidado(lista_cuidados):
 
     visualizar_animais()
 
+    print("-" * 40)
+
     if len(lista_animais) == 0:
         return
 
+    
     id_animal = int(input("Digite o ID do animal relacionado ao cuidado: "))
+    
+    print("-" * 40)
 
     animal = procurar_animal(id_animal)
 
     if animal is None:
+        
+        ("-" * 40)
+
         print("Animal não encontrado.")
         return None
 
     tipo = input("Digite o tipo do cuidado/atividade: ")
     data = input("Digite a data prevista do cuidado: ")
+
+    hoje = datetime.now()
+
+    data_brasil = datetime.strptime(data, "%d/%m/%Y")
+
+    diferença_tempo = hoje - data_brasil
+
     responsavel = input("Digite o responsável pelo cuidado: ")
 
     id = observar_base_de_cuidados(lista_cuidados)
 
-    cuidado = Cuidado(id, id_animal, tipo, data, responsavel)
+    cuidado = Cuidado(id, id_animal, tipo, data, diferença_tempo, responsavel)
 
     print("-" * 40)
+    
     print("Cuidado cadastrado com sucesso!")
-    print("-" * 40)
 
     return cuidado
 
@@ -307,8 +316,6 @@ def visualizar_cuidados():
                 f"{cuidado.pegar_data()} - "
                 f"{cuidado.pegar_responsavel()}"
             )
-
-        print("-" * 40)
 
     else:
 
@@ -472,6 +479,8 @@ def main():
             menu_cuidados_sistema()
 
         else:
+            print("-" * 40)
+            
             print("Valor inválido.")
 
         opcao = Menu.menu_inicio()
@@ -479,4 +488,5 @@ def main():
 if __name__ == "__main__":
     
     main()
+
 

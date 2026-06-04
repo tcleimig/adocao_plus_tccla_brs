@@ -1,4 +1,5 @@
 class User:
+    
     def __init__(self, nome, especie, raca, idade, estado_de_saude, data_de_chegada, comportamento, id):
 
         self.__nome = nome
