@@ -2,18 +2,20 @@ import os
 
 os.system('cls')
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from entidade.usuário import User
+from entidade.animal import User
 
 from menu import Menu
 
 from arquivo import salvar_animais_arquivo
+
 from arquivo import carregar_animais_arquivo
 
 from cuidados import Cuidado
 
 from arquivo import salvar_cuidados_arquivo
+
 from arquivo import carregar_cuidados_arquivo
 
 lista_animais = []
@@ -44,7 +46,7 @@ def observe_valor_menu_animais():
         
         print("-" * 40)
 
-        print("Valor inválido, tente novamente")
+        print("Erro: Valor inválido, tente novamente")
 
         observe_valor = Menu.menu_animais()
     
@@ -144,7 +146,9 @@ def deletar_animal(id):
         
         if animal not in lista_animais or animal is None:
             
-            print("Id inválido. Digite um Id cadastrado")
+            print("-" * 40)
+
+            print("Erro: Id inválido. Digite um Id cadastrado")
 
             return
 
@@ -177,8 +181,10 @@ def atualizar_animal():
     animal = procurar_animal(id)
 
     if animal not in lista_animais or animal is None:
-            
-        print("Id inválido. Digite um Id cadastrado")
+
+        print("-" * 40)
+
+        print("Erro: Id inválido. Digite um Id cadastrado")
 
         return
     
@@ -264,20 +270,30 @@ def adicionar_cuidado(lista_cuidados):
         print("Animal não encontrado.")
         return None
 
-    tipo = input("Digite o tipo do cuidado/atividade: ")
+    tipo = input("Digite o cuidado/atividade previsto para o animal: ")
     data = input("Digite a data prevista do cuidado: ")
 
     hoje = datetime.now()
 
     data_brasil = datetime.strptime(data, "%d/%m/%Y")
 
-    diferença_tempo = hoje - data_brasil
+    data_delta = data_brasil - hoje
+
+    if data_delta.days < 0:
+        
+        print("-" * 40)
+
+        print("Erro: a data do cuidado não pode ser anterior a hoje. Tente novamente")
+
+        return None
+
+    data_diferenca = str(data_delta.days)
 
     responsavel = input("Digite o responsável pelo cuidado: ")
 
     id = observar_base_de_cuidados(lista_cuidados)
 
-    cuidado = Cuidado(id, id_animal, tipo, data, diferença_tempo, responsavel)
+    cuidado = Cuidado(id, id_animal, tipo, data, data_diferenca, responsavel)
 
     print("-" * 40)
     
@@ -312,14 +328,13 @@ def visualizar_cuidados():
             print(
                 f"{cuidado.pegar_id()}: "
                 f"{nome_animal} - "
-                f"{cuidado.pegar_tipo()} - "
-                f"{cuidado.pegar_data()} - "
-                f"{cuidado.pegar_responsavel()}"
+                f"{cuidado.para_string()}"
             )
 
     else:
-
+        print("-" * 40)
         print("Nenhum cuidado cadastrado.")
+        
 
 def procurar_cuidado(id):
 
@@ -335,6 +350,8 @@ def atualizar_cuidado():
 
     if len(lista_cuidados) == 0:
         return
+
+    print("-" * 40)
 
     id = int(input("Digite o ID do cuidado que deseja atualizar: "))
 
@@ -421,7 +438,6 @@ def deletar_cuidado():
 
     print("-" * 40)
     print("Cuidado removido do sistema.")
-    print("-" * 40)
 
 def menu_animais_sistema():
 

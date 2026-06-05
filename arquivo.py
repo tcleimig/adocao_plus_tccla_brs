@@ -1,4 +1,4 @@
-from entidade.usuário import User
+from entidade.animal import User
 
 from cuidados import Cuidado
 
@@ -23,14 +23,15 @@ def carregar_cuidados_arquivo(lista_cuidados):
 
             dados = linha.strip().split(";")
 
-            if len(dados) == 5:
+            if len(dados) == 6:
 
                 cuidado = Cuidado(
                     int(dados[0]),
                     int(dados[1]),
                     dados[2],
                     dados[3],
-                    dados[4]
+                    dados[4],
+                    dados[5]
                 )
 
                 lista_cuidados.append(cuidado)

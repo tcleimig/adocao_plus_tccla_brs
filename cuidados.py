@@ -10,9 +10,9 @@ class Cuidado:
         
         self.__data = data
         
-        self.__responsavel = responsavel
-
         self.__data_diferenca = data_diferenca
+        
+        self.__responsavel = responsavel
 
     def definir_tipo(self, tipo):
         self.__tipo = tipo
@@ -45,7 +45,7 @@ class Cuidado:
         return self.__responsavel
 
     def para_string(self):
-        return f"{self.pegar_id()}: Animal {self.pegar_id_animal()} - {self.pegar_tipo()} - {self.pegar_data()} - {self.definir_data_diferenca} - {self.pegar_responsavel()}"
+        return f"{self.pegar_tipo()} - {self.pegar_data()} - {self.pegar_data_diferenca()} dias para o cuidado - {self.pegar_responsavel()}"
     
     def para_string_arquivo(self):
-        return f"{self.pegar_id()};{self.pegar_id_animal()};{self.pegar_tipo()};{self.pegar_data()};{self.pegar_data_diferenca()};{self.pegar_responsavel()}"
+        return f"{self.pegar_id()};{self.pegar_id_animal()};{self.pegar_tipo()};{self.pegar_data()};{self.pegar_data_diferenca()} dias para o cuidado;{self.pegar_responsavel()}"

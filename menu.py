@@ -34,7 +34,7 @@ class Menu:
         
         print("-" * 40)
 
-        print("Nenhum animal cadastrado")
+        print("❌ Erro: Nenhum animal cadastrado")
 
         print("-" * 40)
 
@@ -49,5 +49,5 @@ class Menu:
             "2 - Visualizar cuidados\n"
             "3 - Editar cuidado\n"
             "4 - Deletar cuidado\n"
-            "5 - Voltar\n"
+            "5 - Voltar ao menu principal\n"
         )
