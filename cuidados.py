@@ -1,6 +1,6 @@
 class Cuidado:
 
-    def __init__(self, id, id_animal, tipo, data, data_diferenca, responsavel):
+    def __init__(self, id, id_animal, tipo, data_brasil2, data_diferenca, responsavel):
 
         self.__id = id
         
@@ -8,7 +8,7 @@ class Cuidado:
         
         self.__tipo = tipo
         
-        self.__data = data
+        self.__data_brasil2 = data_brasil2
         
         self.__data_diferenca = data_diferenca
         
@@ -17,8 +17,8 @@ class Cuidado:
     def definir_tipo(self, tipo):
         self.__tipo = tipo
 
-    def definir_data(self, data):
-        self.__data = data
+    def definir_data_brasil2(self, data_brasil2):
+        self.__data_brasil2 = data_brasil2
 
     def definir_data_diferenca(self, data_diferenca):
         self.__data_diferenca = data_diferenca
@@ -35,8 +35,8 @@ class Cuidado:
     def pegar_tipo(self):
         return self.__tipo
 
-    def pegar_data(self):
-        return self.__data
+    def pegar_data_brasil2(self):
+        return self.__data_brasil2
 
     def pegar_data_diferenca(self):
         return self.__data_diferenca
@@ -45,7 +45,7 @@ class Cuidado:
         return self.__responsavel
 
     def para_string(self):
-        return f"{self.pegar_tipo()} - {self.pegar_data()} - {self.pegar_data_diferenca()} dias para o cuidado - {self.pegar_responsavel()}"
+        return f"{self.pegar_tipo()} - {self.pegar_data_brasil2()} - {self.pegar_data_diferenca()} dias para o cuidado - {self.pegar_responsavel()}"
     
     def para_string_arquivo(self):
-        return f"{self.pegar_id()};{self.pegar_id_animal()};{self.pegar_tipo()};{self.pegar_data()};{self.pegar_data_diferenca()} dias para o cuidado;{self.pegar_responsavel()}"
+        return f"{self.pegar_id()};{self.pegar_id_animal()};{self.pegar_tipo()};{self.pegar_data_brasil2()};{self.pegar_data_diferenca()} dias para o cuidado;{self.pegar_responsavel()}"

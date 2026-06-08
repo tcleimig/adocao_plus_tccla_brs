@@ -1,7 +1,11 @@
+from datetime import datetime
+
 class User:
     
-    def __init__(self, nome, especie, raca, idade, estado_de_saude, data_de_chegada, comportamento, id):
+    def __init__(self, nome, especie, raca, idade, estado_de_saude, data_brasil1, comportamento, id):
 
+        self.__id = id
+        
         self.__nome = nome
         
         self.__especie = especie
@@ -12,11 +16,15 @@ class User:
         
         self.__estado_de_saude = estado_de_saude
         
-        self.__data_de_chegada = data_de_chegada
+        self.__data_brasil1 = data_brasil1
         
         self.__comportamento = comportamento
 
-        self.__id = id
+        self.__adotante = None
+
+    def pegar_id(self):
+
+        return self.__id
 
     def pegar_nome(self):
 
@@ -38,17 +46,17 @@ class User:
 
         return self.__estado_de_saude
     
-    def pegar_data_de_chegada(self):
+    def pegar_data_brasil1(self):
 
-        return self.__data_de_chegada
+        return self.__data_brasil1
     
     def pegar_comportamento(self):
 
         return self.__comportamento
     
-    def pegar_id(self):
+    def pegar_adotante(self):
 
-        return self.__id
+        return self.__adotante
     
     def definir_nome(self, nome):
         
@@ -70,17 +78,53 @@ class User:
         
         self.__estado_de_saude = estado_de_saude
 
-    def definir_data_de_chegada(self, data_de_chegada):
+    def definir_data_brasil1(self, data_brasil1):
         
-        self.__data_de_chegada = data_de_chegada
+        self.__data_brasil1 = data_brasil1
     
     def definir_comportamento(self, comportamento):
         
         self.__comportamento = comportamento
 
+    def definir_adotante(self, adotante):
+
+        self.__adotante = adotante
+
+    def __limpar_data(self):
+        
+        data_errada = self.pegar_data_brasil1()
+
+        data_formatada = str(data_errada)
+
+        try:
+            
+            if "-" in data_formatada:
+
+                data_limpa = data_formatada.split(" ")[0]
+                
+                objeto_data = datetime.strptime(data_limpa, "%Y-%m-%d")
+
+                data_correta = objeto_data.strftime("%d/%m/%Y")
+
+            else:
+
+                data_correta = data_formatada
+
+        except:
+
+            data_correta = data_formatada
+
+        return data_correta
+
     def para_string(self):
-        return f"{self.pegar_id()}: {self.pegar_nome()} - {self.pegar_especie()} - {self.pegar_raca()} - {self.pegar_idade()} - {self.pegar_estado_de_saude()} - {self.pegar_data_de_chegada()} - {self.pegar_comportamento()}"
+        
+        data_correta = self.__limpar_data()     
+        
+        return f"{self.pegar_id()}: {self.pegar_nome()} - {self.pegar_especie()} - {self.pegar_raca()} - {self.pegar_idade()} anos - {self.pegar_estado_de_saude()} - {data_correta} - {self.pegar_comportamento()}"
 
     def para_string_arquivo(self):
-        return f"{self.pegar_id()};{self.pegar_nome()};{self.pegar_especie()};{self.pegar_raca()};{self.pegar_idade()};{self.pegar_estado_de_saude()};{self.pegar_data_de_chegada()};{self.pegar_comportamento()}"
+        
+        data_correta = self.__limpar_data()
+        
+        return f"{self.pegar_id()};{self.pegar_nome()};{self.pegar_especie()};{self.pegar_raca()};{self.pegar_idade()} anos;{self.pegar_estado_de_saude()};{data_correta};{self.pegar_comportamento()}"
     
