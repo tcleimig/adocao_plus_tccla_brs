@@ -439,6 +439,57 @@ def deletar_cuidado():
     print("-" * 40)
     print("Cuidado removido do sistema.")
 
+def gerar_sugestoes_animal():
+
+    visualizar_animais()
+
+    if len(lista_animais) == 0:
+        return
+
+    print("-" * 40)
+
+    id = int(input("Digite o ID do animal para gerar sugestões: "))
+
+    animal = procurar_animal(id)
+
+    if animal is None:
+        print("Erro: Animal não encontrado.")
+        return
+
+    idade_texto = animal.pegar_idade()
+    idade = int(idade_texto.split()[0]) #Isso é só pra ele pegar só o numero da idade, tipo só o "2" dos "2 anos"
+    especie = animal.pegar_especie().lower()
+    comportamento = animal.pegar_comportamento().lower()
+
+    print("-" * 40)
+    print(f"Sugestões para {animal.pegar_nome()}:")
+    print("-" * 40)
+
+    if idade <= 2:
+        print("- Animal jovem: recomendado para adotantes com tempo para brincadeiras, treino e gasto de energia.")
+    elif idade <= 9:
+        print("- Animal adulto: boa opção para adotantes que buscam equilíbrio entre energia e adaptação.")
+    else:
+        print("- Animal idoso: recomendado para adotantes pacientes e ambientes mais calmos.")
+
+    if especie == "cachorro":
+        print("- Espécie: precisa de passeios, rotina e atividades físicas.")
+    elif especie == "gato":
+        print("- Espécie: precisa de ambiente seguro, caixa de areia e enriquecimento ambiental.")
+    else:
+        print("- Espécie: recomenda-se pesquisar cuidados específicos antes da adoção.")
+
+    if "docil" in comportamento or "dócil" in comportamento or "calmo" in comportamento:
+        print("- Comportamento: indicado para famílias, crianças ou adotantes iniciantes.")
+    elif "bravo" in comportamento or "agressivo" in comportamento or "medroso" in comportamento:
+        print("- Comportamento: recomendado para adotantes experientes e socialização supervisionada.")
+    elif "ativo" in comportamento or "agitado" in comportamento or "alegre" in comportamento:
+        print("- Comportamento: precisa de atividades frequentes e estímulos diários.")
+    else:
+        print("- Comportamento: recomenda-se avaliação individual antes da adoção.")
+
+    print("-" * 40)
+
 def menu_animais_sistema():
 
     valor = observe_valor_menu_animais()
@@ -486,7 +537,7 @@ def main():
 
     opcao = Menu.menu_inicio()
 
-    while opcao != "3":
+    while opcao != "4":
 
         if opcao == "1":
             menu_animais_sistema()
@@ -494,9 +545,11 @@ def main():
         elif opcao == "2":
             menu_cuidados_sistema()
 
+        elif opcao == "3":
+            gerar_sugestoes_animal()
+
         else:
             print("-" * 40)
-            
             print("Valor inválido.")
 
         opcao = Menu.menu_inicio()

@@ -11,9 +11,9 @@ class Menu:
         return input(
             "1 - Gerenciar animais\n"
             "2 - Gerenciar cuidados e atividades\n"
-            "3 - Sair do sistema\n")
+            "3 - Sugestões personalizadas\n"
+            "4 - Sair do sistema\n")
      
-
     def menu_animais():
        
         print("-" * 40)
