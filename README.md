@@ -369,6 +369,8 @@ Digite o ID do cuidado que deseja deletar: 2
 Cuidado removido do sistema.
 ----------------------------------------
 
+você deve ter visto que existem em cada lista a opção 5, 7 ou 8 todas elas fazem a mesma coisa, tirar você de um menu e colocar no mai próximo do principal até o principal em si que termina o sistema depois de digitar sua opção
+
 e é isso este é o Adoção+ criado por Tiago Leimig e Bruno Ramos
 
 # OBRIGADO!

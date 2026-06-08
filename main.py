@@ -12,7 +12,7 @@ from arquivo import salvar_animais_arquivo
 
 from arquivo import carregar_animais_arquivo
 
-from cuidados import Cuidado
+from entidade.cuidados import Cuidado
 
 from arquivo import salvar_cuidados_arquivo
 

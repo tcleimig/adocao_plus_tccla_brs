@@ -1,6 +1,6 @@
 from entidade.animal import User
 
-from cuidados import Cuidado
+from entidade.cuidados import Cuidado
 
 from entidade.adotante import Adotante
 
