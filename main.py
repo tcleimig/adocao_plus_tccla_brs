@@ -273,19 +273,27 @@ def atualizar_animal():
 
             data_de_chegada = input("Digite a data de chegada do animal: ")
 
-            try:
+            if len(data_de_chegada) == 0:
+            
+                print("Data mantida")
+
+            else:
+
+                try:
                 
-                data_brasil1 = datetime.strptime(data_de_chegada, "%d/%m/%Y")
-    
-            except ValueError:
-        
-                    print("-" * 40)
-        
-                    print("Erro: Data inválida ou formato incorreto!")
+                    data_objeto = datetime.strptime(data_de_chegada, "%d/%m/%Y")
 
-                    return None
+                    data_string_final = data_objeto.strftime("%d/%m/%Y")
 
-            animal.definir_data_brasil1(data_brasil1 if len(data_brasil1) != 0 else animal.pegar_data_brasil1())
+                    animal.definir_data_brasil1(data_string_final)
+                
+                except ValueError:
+            
+                        print("-" * 40)
+            
+                        print("Erro: Data inválida ou formato incorreto!")
+
+                        return None
 
         elif opcao == 5:
 
@@ -454,9 +462,9 @@ def atualizar_cuidado():
 
     opcao = int(input("Digite uma opção: "))
 
-    while opcao != "4":
+    while opcao != 4:
 
-        if opcao == "1":
+        if opcao == 1:
 
             tipo = input("Digite o novo tipo: ")
 
@@ -464,40 +472,48 @@ def atualizar_cuidado():
                 tipo if len(tipo) != 0 else cuidado.pegar_tipo()
             )
 
-        elif opcao == "2":
+        elif opcao == 2:
 
             data = input("Digite a nova data: ")
 
-            hoje = datetime.now()
+            if len(data) == 0:
+                print("Data mantida do cuidado")
 
-            try: 
-                data_brasil2 = datetime.strptime(data, "%d/%m/%Y")
-            
-            except ValueError:
+            else:
+
+                try: 
+                    
+                    data_objeto = datetime.strptime(data, "%d/%m/%Y")
+                    
+                    data_string_final = data_objeto.strftime("%d/%m/%Y")
                 
-                print("-" * 40)
+                except ValueError:
+                    
+                    print("-" * 40)
+                    
+                    print("Erro: Data inválida ou formato incorreto!")
+
+                    return None
+
+                hoje = datetime.now()
                 
-                print("Erro: Data inválida ou formato incorreto!")
+                data_delta = data_objeto - hoje
 
-                return None
+                if data_delta.days < 0:
+                    
+                    print("-" * 40)
 
-            data_delta = data_brasil2 - hoje
+                    print("Erro: a data do cuidado não pode ser anterior a hoje. Tente novamente")
 
-            if data_delta.days < 0:
-                
-                print("-" * 40)
+                    return None
 
-                print("Erro: a data do cuidado não pode ser anterior a hoje. Tente novamente")
+                data_diferenca = str(data_delta.days)
 
-                return None
+                cuidado.definir_data_brasil2((data_string_final))
 
-            data_diferenca = str(data_delta.days)
+                cuidado.definir_data_diferenca((data_diferenca))
 
-            cuidado.definir_data(data if len(data) != 0 else cuidado.pegar_data())
-
-            cuidado.definir_data_diferenca(data_diferenca if len(data_diferenca) != 0 else cuidado.pegar_data_diferenca())
-
-        elif opcao == "3":
+        elif opcao == 3:
 
             responsavel = input("Digite o novo responsável: ")
 
@@ -513,7 +529,6 @@ def atualizar_cuidado():
         print(cuidado.para_string())
         print("-" * 40)
 
-        print("-" * 40)
         print("1 - Editar tipo")
         print("2 - Editar data")
         print("3 - Editar responsável")

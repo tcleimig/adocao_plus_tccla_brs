@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Cuidado:
 
     def __init__(self, id, id_animal, tipo, data_brasil2, data_diferenca, responsavel):
@@ -43,9 +45,41 @@ class Cuidado:
     
     def pegar_responsavel(self):
         return self.__responsavel
+    
+    def __limpar_data(self):
+        
+        data_errada = self.pegar_data_brasil2()
+
+        data_formatada = str(data_errada)
+
+        try:
+            
+            if "-" in data_formatada:
+
+                data_limpa = data_formatada.split(" ")[0]
+                
+                objeto_data = datetime.strptime(data_limpa, "%Y-%m-%d")
+
+                data_correta = objeto_data.strftime("%d/%m/%Y")
+
+            else:
+
+                data_correta = data_formatada
+
+        except:
+
+            data_correta = data_formatada
+
+        return data_correta
 
     def para_string(self):
-        return f"{self.pegar_tipo()} - {self.pegar_data_brasil2()} - {self.pegar_data_diferenca()} dias para o cuidado - {self.pegar_responsavel()}"
+        
+        data_correta = self.__limpar_data()
+        
+        return f"{self.pegar_tipo()} - {data_correta} - {self.pegar_data_diferenca()} dias para o cuidado - {self.pegar_responsavel()}"
     
     def para_string_arquivo(self):
-        return f"{self.pegar_id()};{self.pegar_id_animal()};{self.pegar_tipo()};{self.pegar_data_brasil2()};{self.pegar_data_diferenca()} dias para o cuidado;{self.pegar_responsavel()}"
+        
+        data_correta = self.__limpar_data()
+        
+        return f"{self.pegar_id()};{self.pegar_id_animal()};{self.pegar_tipo()};{data_correta};{self.pegar_data_diferenca()} dias para o cuidado;{self.pegar_responsavel()}"
