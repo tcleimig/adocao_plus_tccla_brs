@@ -63,6 +63,19 @@ def observe_valor_menu_animais():
     
     return int(observe_valor)
 
+def observe_valor_menu_adotantes():
+
+    observe_valor = Menu.menu_adotantes_sistema()
+    
+    while observe_opcao(observe_valor):
+        
+        print("-" * 40)
+
+        print("Erro: Valor inválido, tente novamente")
+
+        observe_valor = Menu.menu_adotantes_sistema()
+    
+    return int(observe_valor)
 
 def observar_base_de_animais(lista_animais):
     maior_id = 0
@@ -103,7 +116,7 @@ def adicionar_animal(lista_animais):
     
     raca = input("Digite a raça do animal: ")
     
-    idade = input("Digite a idade do animal: ")
+    idade = int(input("Digite a idade do animal: "))
     
     estado_de_saude = input("Digite o estado de saúde do animal: ") 
     
@@ -260,7 +273,19 @@ def atualizar_animal():
 
             data_de_chegada = input("Digite a data de chegada do animal: ")
 
-            animal.definir_data_de_chegada(data_de_chegada if len(data_de_chegada) != 0 else animal.pegar_data_de_chegada())
+            try:
+                
+                data_brasil1 = datetime.strptime(data_de_chegada, "%d/%m/%Y")
+    
+            except ValueError:
+        
+                    print("-" * 40)
+        
+                    print("Erro: Data inválida ou formato incorreto!")
+
+                    return None
+
+            animal.definir_data_brasil1(data_brasil1 if len(data_brasil1) != 0 else animal.pegar_data_brasil1())
 
         elif opcao == 5:
 
@@ -325,7 +350,7 @@ def adicionar_cuidado(lista_cuidados):
     hoje = datetime.now()
 
     try: 
-        data_brasil2 = data.strptime("%d/%m/%Y")
+        data_brasil2 = datetime.strptime(data, "%d/%m/%Y")
     
     except ValueError:
         
@@ -429,9 +454,9 @@ def atualizar_cuidado():
 
     opcao = int(input("Digite uma opção: "))
 
-    while opcao != 4:
+    while opcao != "4":
 
-        if opcao == 1:
+        if opcao == "1":
 
             tipo = input("Digite o novo tipo: ")
 
@@ -439,15 +464,40 @@ def atualizar_cuidado():
                 tipo if len(tipo) != 0 else cuidado.pegar_tipo()
             )
 
-        elif opcao == 2:
+        elif opcao == "2":
 
             data = input("Digite a nova data: ")
 
-            cuidado.definir_data(
-                data if len(data) != 0 else cuidado.pegar_data()
-            )
+            hoje = datetime.now()
 
-        elif opcao == 3:
+            try: 
+                data_brasil2 = datetime.strptime(data, "%d/%m/%Y")
+            
+            except ValueError:
+                
+                print("-" * 40)
+                
+                print("Erro: Data inválida ou formato incorreto!")
+
+                return None
+
+            data_delta = data_brasil2 - hoje
+
+            if data_delta.days < 0:
+                
+                print("-" * 40)
+
+                print("Erro: a data do cuidado não pode ser anterior a hoje. Tente novamente")
+
+                return None
+
+            data_diferenca = str(data_delta.days)
+
+            cuidado.definir_data(data if len(data) != 0 else cuidado.pegar_data())
+
+            cuidado.definir_data_diferenca(data_diferenca if len(data_diferenca) != 0 else cuidado.pegar_data_diferenca())
+
+        elif opcao == "3":
 
             responsavel = input("Digite o novo responsável: ")
 
@@ -515,7 +565,7 @@ def gerar_sugestoes_animal():
         return
 
     idade_texto = animal.pegar_idade()
-    idade = int(idade_texto.split()[0]) #Isso é só pra ele pegar só o numero da idade, tipo só o "2" dos "2 anos" #beleza viadovski
+    idade = int(idade_texto.split()[0])
     especie = animal.pegar_especie().lower()
     comportamento = animal.pegar_comportamento().lower()
 
@@ -548,23 +598,27 @@ def gerar_sugestoes_animal():
 
 def menu_animais_sistema():
 
-    valor = observe_valor_menu_animais()
+    valor = Menu.menu_animais()
 
-    while valor != 5:
+    while valor != "5":
 
-        if valor == 1:
+        if valor == "1":
             salvar_animal(adicionar_animal(lista_animais))
 
-        elif valor == 2:
+        elif valor == "2":
             visualizar_animais()
 
-        elif valor == 3:
+        elif valor == "3":
             atualizar_animal()
 
-        elif valor == 4:
+        elif valor == "4":
             deletar_animal(id)
+        
+        else:
+            print("-" * 40)
+            print("Valor inválido.")
 
-        valor = observe_valor_menu_animais()
+        valor = Menu.menu_animais()
 
 def menu_cuidados_sistema():
 
@@ -585,29 +639,34 @@ def menu_cuidados_sistema():
             deletar_cuidado()
 
         else:
+            print("-" * 40)
             print("Valor inválido.")
 
         opcao = Menu.menu_cuidados()
 
 def menu_adotantes_sistema():
 
-    valor = observe_valor_menu_adotantes()
+    valor = Menu.menu_adotantes()
 
-    while valor != 5:
+    while valor != "5":
 
-        if valor == 1:
+        if valor == "1":
             salvar_adotante(adicionar_adotante(lista_adotantes))
 
-        elif valor == 2:
+        elif valor == "2":
             visualizar_adotantes()
 
-        elif valor == 3:
+        elif valor == "3":
             atualizar_adotante()
 
-        elif valor == 4:
+        elif valor == "4":
             deletar_adotante(id)
 
-        valor = observe_valor_menu_adotantes()
+        else:
+            print("-" * 40)
+            print("Valor inválido.")
+
+        valor = Menu.menu_adotantes()
 
 def adicionar_adotante(lista_adotantes):
 
@@ -615,31 +674,33 @@ def adicionar_adotante(lista_adotantes):
     
     id = observar_base_de_adotantes(lista_adotantes)
     
-    while True:
+    
         
-        nome_adotante = input("Digite seu nome: ")
+    nome_adotante = input("Digite seu nome: ")
         
-        CPF = input("Digite o seu CPF: ")
+    CPF = input("Digite o seu CPF: ")
         
-        idade_adotante = int(input("Digite sua idade: "))
+    idade_adotante = int(input("Digite sua idade: "))
 
-        if idade_adotante < 18:
-
-            print("Erro: você não possui a idade correspondente para adotar um animal!")
-
-            return None
-        
-        endereco = input("Digite o seu endereço: ")
-        
-        telefone = input("digite o seu telefone: ")
-
-        email = input("digite o seu email: ") 
+    if idade_adotante < 18:
 
         print("-" * 40)
+            
+        print("Erro: você não possui a idade correspondente para adotar um animal!")
 
-        print("Cadastrado realizado com sucesso!")
+        return None
+        
+    endereco = input("Digite o seu endereço: ")
+        
+    telefone = input("digite o seu telefone: ")
 
-        return Adotante(id, nome_adotante, CPF, idade_adotante, endereco, telefone, email)
+    email = input("digite o seu email: ") 
+
+    print("-" * 40)
+
+    print("Cadastrado realizado com sucesso!")
+
+    return Adotante(id, nome_adotante, CPF, idade_adotante, endereco, telefone, email)
 
 def salvar_adotante(adotante):
     
@@ -742,45 +803,66 @@ def atualizar_adotante():
         
         if opcao == 1:
 
+            print("-" * 40)
+
             nome_adotante = input("Digite o nome correto: ")
 
             adotante.definir_nome_adotante(nome_adotante if len(nome_adotante) != 0 else adotante.pegar_nome_adotante())
 
         elif opcao == 2:
 
-            CPF = input("Digite o CPF correto: ")
+            print("-" * 40)
+
+            CPF = int(input("Digite o CPF correto: "))
             
             adotante.definir_CPF(CPF if len(CPF) != 0 else adotante.pegar_CPF())
 
         elif opcao == 3:
+
+            print("-" * 40)
             
-            idade_adotante = input("Digite a idade correta: ")
+            idade_adotante = int(input("Digite a idade correta: "))
+
+            if idade_adotante < 18:
+                print("\nErro: você não possui a idade correspondente para adotar um animal!")
+
+                return None
 
             adotante.definir_idade_adotante(idade_adotante if len(idade_adotante) != 0 else adotante.pegar_idade_adotante())
 
         elif opcao == 4:
+           
+           print("-" * 40)
 
            endereco = input("Digite o endereço correto: ")
 
-           adotante.definir_endereco(endereco if len(endereco) != 0 else adotante.endereco())
+           adotante.definir_endereco(endereco if len(endereco) != 0 else adotante.pegar_endereco())
 
         elif opcao == 5:
 
-            animal_ideal = input("Digite o telefone correto: ")
+            print("-" * 40)
 
-            adotante.definir_animal_ideal(animal_ideal if len(animal_ideal) != 0 else adotante.pegar_animal_ideal())
+            telefone = int(input("Digite o telefone correto: "))
+
+            adotante.definir_telefone(telefone if len(telefone) != 0 else adotante.pegar_telefone())
 
         elif opcao == 6:
 
-            especie = input("Digite o email correto: ")
+            print("-" * 40)
 
-            adotante.definir_especie(especie if len(especie) != 0 else adotante.pegar_especie())
+            email = input("Digite o email correto: ")
+
+            adotante.definir_email(email if len(email) != 0 else adotante.pegar_email())
 
         else:
             
+            print("-" * 40)
+            
             print("Valor inválido")
         
-        Menu.menu_atualizar_adotante()        
+        Menu.menu_atualizar_adotante() 
+
+        print("-" * 40)
         
         opcao = int(input("Digite o número de uma opção: "))
     

@@ -60,7 +60,7 @@ def carregar_animais_arquivo(lista_animais):
                     dados[1],
                     dados[2],
                     dados[3],
-                    int(dados[4]),
+                    dados[4],
                     dados[5],
                     dados[6],
                     dados[7],
@@ -112,7 +112,7 @@ def carregar_adotantes_arquivo(lista_adotantes):
                     int(dados[0]),
                     dados[1],
                     int(dados[2]),
-                    int(dados[3]),
+                    dados[3],
                     dados[4],
                     int(dados[5]),
                     dados[6]

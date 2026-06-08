@@ -126,5 +126,5 @@ class User:
         
         data_correta = self.__limpar_data()
         
-        return f"{self.pegar_id()};{self.pegar_nome()};{self.pegar_especie()};{self.pegar_raca()};{self.pegar_idade()} anos;{self.pegar_estado_de_saude()};{data_correta};{self.pegar_comportamento()}"
+        return f"{self.pegar_id()};{self.pegar_nome()};{self.pegar_especie()};{self.pegar_raca()};{self.pegar_idade()};{self.pegar_estado_de_saude()};{data_correta};{self.pegar_comportamento()}"
     

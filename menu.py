@@ -49,7 +49,7 @@ class Menu:
 
         print("-" * 40)
 
-    def menu_adotantes_sistema():
+    def menu_adotantes():
        
         print("-" * 40)
 
@@ -78,3 +78,5 @@ class Menu:
         print("-" * 40)
 
         print("1 - Editar nome\n2 - Editar CPF\n3 - Editar idade\n4 - Editar endereço\n5 - Editar telefone\n6 - Editar email\n7 - Parar de atualizar")
+
+        

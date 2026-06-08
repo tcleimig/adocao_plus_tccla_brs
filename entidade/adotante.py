@@ -59,7 +59,7 @@ class Adotante:
         return self.__animais_para_conhecer
 
     def para_string(self):
-        return f"{self.pegar_id()}: {self.pegar_nome_adotante()} - {self.pegar_CPF()} - {self.pegar_idade_adotante()} anos - {self.pegar_endereco()} - {self.pegar_telefone} - {self.pegar_email}"
+        return f"{self.pegar_id()}: {self.pegar_nome_adotante()} - {self.pegar_CPF()} - {self.pegar_idade_adotante()} anos - {self.pegar_endereco()} - {self.pegar_telefone()} - {self.pegar_email()}"
     
     def para_string_arquivo(self):
-        return f"{self.pegar_id()};{self.pegar_nome_adotante()};{self.pegar_CPF()};{self.pegar_idade_adotante()} anos;{self.pegar_endereco()};{self.pegar_telefone};{self.pegar_email}"
+        return f"{self.pegar_id()};{self.pegar_nome_adotante()};{self.pegar_CPF()};{self.pegar_idade_adotante()};{self.pegar_endereco()};{self.pegar_telefone()};{self.pegar_email()}"

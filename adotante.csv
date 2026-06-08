@@ -1,1 +1,3 @@
-1;Tiago;09;18 anos;casa;<bound method Adotante.pegar_telefone of <entidade.adotante.Adotante object at 0x00000281538C9790>>;<bound method Adotante.pegar_email of <entidade.adotante.Adotante object at 0x00000281538C9790>>
+1;Tiago;70530121409;19;Rua Sucrilhenta 90;999999999999;tlv@gmail.com
+2;Bruno;888888888;19;Rua Malera 89;88888888888;brc@hotmail.com
+3;Ana Maria;77777777777;21;Rua Cama rá gibe 51;9203102809310298;ana@outlook.com
