@@ -830,20 +830,34 @@ def atualizar_adotante():
 
             CPF = int(input("Digite o CPF correto: "))
             
-            adotante.definir_CPF(CPF if len(CPF) != 0 else adotante.pegar_CPF())
+            adotante.definir_CPF(CPF)
 
         elif opcao == 3:
-
             print("-" * 40)
-            
-            idade_adotante = int(input("Digite a idade correta: "))
+            entrada_idade = input("Digite a idade correta: ")
 
-            if idade_adotante < 18:
-                print("\nErro: você não possui a idade correspondente para adotar um animal!")
+            if len(entrada_idade) == 0:
+                print("Idade mantida.")
+                
+            else:
+                
+                try:
+                    
+                    idade_adotante = int(entrada_idade)
+                
+                except ValueError:
+                    
+                    print("Erro: Por favor, digite um número inteiro válido para a idade.")
+                    
+                    continue
 
-                return None
-
-            adotante.definir_idade_adotante(idade_adotante if len(idade_adotante) != 0 else adotante.pegar_idade_adotante())
+                if idade_adotante < 18:
+                    
+                    print("Erro: O adotante não possui a idade correspondente para adotar um animal!")
+                    
+                    return None
+                
+                adotante.definir_idade_adotante(idade_adotante)
 
         elif opcao == 4:
            
@@ -859,7 +873,7 @@ def atualizar_adotante():
 
             telefone = int(input("Digite o telefone correto: "))
 
-            adotante.definir_telefone(telefone if len(telefone) != 0 else adotante.pegar_telefone())
+            adotante.definir_telefone(telefone)
 
         elif opcao == 6:
 
